@@ -8,10 +8,9 @@
 (defn testsolveqns []
   (do
     (println "Battery: " (solveqns eqnsbat databat 'terminal_voltage))
-    ;(println "Ang Mom: " (solveqns eqnscirc datacirc 'angular_momentum))
-    ;(println "Lens:    " (solveqns eqnslens datalens 'magnification))
-    ;(println "Power:   " (solveqns eqnslift datalift 'power)) ))
-    ) )
+    (println "Ang Mom: " (solveqns eqnscirc datacirc 'angular_momentum))
+    (println "Lens:    " (solveqns eqnslens datalens 'magnification))
+    (println "Power:   " (solveqns eqnslift datalift 'power)) ))
 
 ;(defn solvecodepr [name equations knowns var]
 ;  (let [strings (solvecode name equations knowns var)]
@@ -28,18 +27,18 @@
 ;; a test case for arglist:
 ;; (arglist '(a b c))   =   " double a, double b, double c"
 ;
-;; individual tests for equation set solving, producing code list backwards
-;(defn testsolveqnscbat []
-;  (solveqnsc '() eqnsbat (map first databat) 'terminal_voltage) )
-;
-;(defn testsolveqnsccirc []
-;  (solveqnsc '() eqnscirc (map first datacirc) 'angular_momentum) )
-;
-;(defn testsolveqnsclens []
-;  (solveqnsc '() eqnslens (map first datalens) 'magnification) )
-;
-;(defn testsolveqnsclift []
-;  (solveqnsc '() eqnslift (map first datalift) 'power) )
+; individual tests for equation set solving, producing code list backwards
+(defn testsolveqnscbat []
+  (solveqnsc '() eqnsbat (map first databat) 'terminal_voltage) )
+
+(defn testsolveqnsccirc []
+  (solveqnsc '() eqnscirc (map first datacirc) 'angular_momentum) )
+
+(defn testsolveqnsclens []
+  (solveqnsc '() eqnslens (map first datalens) 'magnification) )
+
+(defn testsolveqnsclift []
+  (solveqnsc '() eqnslift (map first datalift) 'power) )
 ;
 ;
 ;; individual tests for equation set solving followed by filtering
@@ -75,8 +74,12 @@
 ;       (let [fileqns (filtercode eqns '(power)) ]
 ;         (doseq [item fileqns] (println item)) ))))
 ;
-;(defn testall []
-;  (do
+(defn testall []
+  (do
+    (testsolveqnscbat)
+    (testsolveqnsccirc)
+    ;(testsolveqnsclens)
+    ;(testsolveqnsclift)
 ;    (testsolveqns)
 ;    (testfiltercodebat)
 ;    (testfiltercodecirc)
@@ -84,4 +87,5 @@
 ;    (testfiltercodelift)
 ;    (println)
 ;    (testsolvecode) ))
+  ))
 ;

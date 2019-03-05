@@ -20,16 +20,50 @@
     (doseq [eqn eqns]
       (doseq [x eqn]
         (if (and (= (assocl x values) nil) (myevalb (rhs (solve eqn x) ) values) )
-          (solveqns eqns (cons (cons x (cons (myevalb (rhs (solve eqn x) ) values) '() ) ) values) v ) ) ) ) ) )
+          (solveqns2 eqns (cons (cons x (cons (myevalb (rhs (solve eqn x) ) values) '() ) ) values) v) ) ) ) ) )
 
-(def addtovalues [eqn values] 
-  (doseq [x eqn]
-    (if (and (= (assocl x values) nil) (myevalb (rhs (solve eqn x)) values) )
-      (cons (cons x (cons (myevalbe (rhs (solve eqn x) ) values ) '() ) ) values ) ) ) )
+; Helper function for solveqns to determin if there are any more known variables
+(defn addtovalues [eqn values vs] 
+  (if (empty? vs)
+    values
+    (if (and (= (assocl (first vs) values) nil) (myevalb (rhs (solve eqn (first vs) ) ) values) )
+      (cons (cons (first vs) (cons (myevalb (rhs (solve eqn (first vs) ) ) values) '() ) ) values)
+      (addtovalues eqn values (rest vs) ) ) ) )
+
+; return the value of a variable given a set of equations and a set of already know varibles
 (defn solveqns [eqns values v]
-  (doseq [eqn eqns]
-    (doseq [x eqn]
-      (if (and (= (assocl x values) nil) (myevalb (rhs (solve eqn x) ) values) )
-        (solveqns eqns (cons (cons x (cons (myevalb (rhs (solve eqn x) ) values) '() ) ) values) v ) ) ) )
-  values )
+  (if (assocl v values)
+    (second (assocl v values) )
+    (if (empty? eqns)
+      nil
+      (solveqns (rest eqns) (addtovalues (first eqns) values (vars (first eqns) ) ) v) ) ) )
+
+; helper function for solveqnsc to determine if there are any more known variables
+(defn addtoknowns [eqn knowns vs]
+  (if (empty? vs)
+    knowns
+    (if (and (= (member (first vs) knowns) nil) (= (set-difference (vars (rhs (solve eqn (first vs) ) ) ) knowns) '() ) )
+      (cons (first vs) knowns)
+      (addtoknowns eqn knowns (rest vs) ) ) ) )
+
+; determines the unknow variable and returns the solved equation for that variable
+(defn vtosolvfor [eqn knowns vs]
+  (if (= (member (first vs) knowns ) nil)
+    (solve eqn (first vs) )
+    (vtosolvfor eqn knowns (rest vs) ) ) )
+
+; determines all the equations used to come up evaluate the variable v
+(defn solveqnsc [codelist eqns knowns v]
+  (if (member v knowns)
+    codelist
+    (if (empty? eqns)
+      nil
+      (if (= (addtoknowns (first eqns) knowns (vars (first eqns) ) ) knowns)
+        (solveqnsc codelist (rest eqns) knowns v)
+        (solveqnsc (cons (vtosolvfor (first eqns) knowns (vars (first eqns) ) ) codelist) (rest eqns) (addtoknowns (first eqns) knowns (vars (first eqns) ) ) v) ) ) ) )
+
+(defn filter [codelist needed]
+  (if (empty? codelist)
+    needed
+
 

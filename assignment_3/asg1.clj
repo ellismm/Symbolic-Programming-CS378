@@ -94,7 +94,7 @@
   (if (empty? lstb)
     lsta
     (if (empty? lsta)
-      () 
+      '() 
       (if (member (first lsta) lstb)
         (set-difference (rest lsta) lstb)
         (cons (first lsta) (set-difference (rest lsta) lstb) ) ) ) ) )
