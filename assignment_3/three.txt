@@ -1,0 +1,135 @@
+<HTML>
+<!--  cs378eqnsb.html          G. Novak           28 Jan 19    -->
+<!--    -->
+<HEAD>
+  <TITLE>CS 378 Assignment 3: Physics and Code</TITLE>
+</HEAD>
+<BODY>
+
+<H2>CS 378 Assignment 3: Physics and Code</H2>
+
+<H3>Due: March 12, 2019.</H3>
+
+<B>Files:</B> <tt>cs378.clj</tt> &nbsp; <tt>formulas.clj</tt> &nbsp;
+ <tt>test3.clj</tt> <tt>asgtest.java</tt>
+
+<P>
+The following functions that operate on trees should be recursive.
+Some useful functions that you may need are provided in the file
+<tt>cs378.clj</tt>, and you will need some of your functions from the
+previous assignments.
+
+<OL>
+<P><LI> Physical principles often are described by sets of equations.
+Since the <tt>solve</tt> function from the previous assignment is able
+to solve a single equation, we would like to extend it to solve problems
+involving multiple equations.
+<P>
+Write a function <tt>Double (solveqns eqns vals v)</tt> that
+attempts to solve the list of equations <tt>eqns</tt> for variable
+<tt>v</tt> given an association list of values <tt>vals</tt>.
+<OL>
+<LI> If the desired variable <tt>v</tt> has a value defined in
+<tt>vals</tt>, the problem is solved, and the value can be returned.
+
+<P><LI> Otherwise, look through the list of equations to see if there
+is an equation that has <I>exactly one</I> unknown.  If so, the equation
+can be solved for that variable using <tt>solve</tt>, and the value of the
+variable can be found using <tt>myevalb</tt> with <TT>vals</TT>.
+Add the new variable and value to <tt>vals</tt> and call
+<tt>solveqns</tt> recursively to try again.
+
+<P><LI> If all the equations have been examined and none of them can be
+solved, return <tt>nil</tt>.
+</OL>
+
+<P> Use your program to answer the following questions.  Input data is
+provided in the file <tt>formulas.clj</tt>.
+<OL>
+<LI> What is the terminal voltage of a battery with a current of 0.3 amp
+and internal resistance of 4 ohms and voltage of 12 volts ?
+<!--  10.8 volts   -->
+
+<LI> What is the angular momentum of a circular motion with radius 4 m
+and mass 2 kg and velocity 3 m/s ?
+<!--  24 kg m^2 / sec   -->
+
+<LI> What is the magnification of a converging lens with
+ subject distance = 6 cm and focal length = 9 cm ?
+<!--  3   -->
+
+<LI> What is the power of a lift with weight 700 nt and height 8 m and
+time 10 sec ?
+<!-- 560 watt   -->
+</OL>
+See <A href="http://www.cs.utexas.edu/users/novak/cgi/physdemod.cgi">
+<tt>http://www.cs.utexas.edu/users/novak/cgi/physdemod.cgi</tt></A>.
+
+<P><LI> A related task is to use a set of equations to write a program
+to find a desired variable given the values of other variables.
+<OL>
+<P><LI> Write a program <TT>(solveqnsc codelist equations knowns var)</TT>
+that is given a list of equations, a list of variables whose values
+are known, and a desired variable <TT>var</TT>. <TT>codelist</TT> is
+initially empty (<TT>nil</TT> or <TT>'()</TT>).  If <TT>var</TT> is
+among the <TT>knowns</TT>, return the <TT>codelist</TT>.  Otherwise,
+look for an equation that involves exactly one unknown and solve it
+for that unknown.  <TT>cons</TT> the new equation onto the front
+of the <TT>codelist</TT>, add the unknown that was solved to the list
+of <TT>knowns</TT>, and try again, recursively.  Note that
+<TT>solveqnsc</TT> will produce a list of equations in backwards
+order, since <TT>cons</TT> is used to add a new equation to the
+front of the list.
+
+<P><LI> <TT>solveqnsc</TT> may produce some equations that are not
+needed in order to find the desired variable.  Write a function
+<TT>(filtercode codelist needed)</TT> that removes unnecessary
+equations from a (backwards) equation list as follows.
+<P>
+<TT>needed</TT> is a list of variables whose values are needed
+by equations that will appear later in the code; initially, <TT>needed</TT>
+will be a list of the single <TT>var</TT> that is the goal of the
+function.
+<P>
+Go through the (backwards) equation list one equation at a time.
+If the <TT>lhs</TT> of the equation is a member of <TT>needed</TT>,
+then we need that equation, and it should be kept; in this case,
+any variables in the <TT>rhs</TT> of the equation will also be needed
+and should be added to <TT>needed</TT> (using <TT>union</TT>)
+for the recursive call.  If the <TT>lhs</TT> of an equation is
+not a member of <TT>needed</TT>, that equation can be eliminated,
+and <TT>needed</TT> is unchanged.  The variables in <TT>needed</TT>
+are called <I>busy</I> or <I>live variables</I>, and this process is
+called <I>dead code elimination</I>.
+</OL>
+<P><LI> Write a program <TT>(solvecode name equations inputs var)</TT>
+that is given the name of a desired function, a list of equations,
+a list of variables whose values are inputs, and a desired variable
+<TT>var</TT>.  The result should be a list of strings that when
+printed form a program in Java.  You may need to add a case to your
+<TT>tojava</TT> function to turn a call <TT>(expt x 2) </TT>
+into <TT>Math.pow(x,2) </TT>.
+<OL>
+<P><LI> <TT>cons</TT> a <TT>return</TT> line and closing bracket
+onto the (backwards) code list to form the end of the Java function.
+
+<P><LI> Produce a function header line (as a string) from the given
+<TT>name</TT> and <TT>inputs</TT>; we will assume that all variables
+are <TT>double</TT>:
+<PRE>
+   public static double foo(double x, double y, double z) {
+</PRE>
+A useful function is <TT>(arglist inputs)</TT> that calls a helper
+function and produces a string of <TT>double</TT> and input names
+separated by commas for use as an argument list.
+<P><LI> You can print the result of <TT>solvecode</TT> using:
+<PRE>
+   (doseq [item strings] (println item))
+</PRE>
+<P><LI> A test file <TT>asg3test.java</TT> is provided for testing.
+Copy your generated code into this file and test it in Java.
+</OL>
+
+</OL>
+</BODY>
+</HTML>
