@@ -81,7 +81,7 @@
    ; (testsolveqnsclens)
    ; (testsolveqnsclift)
     (testsolveqns)
-    (testfiltercodebat)
+;    (testfiltercodebat)
 ;    (testfiltercodecirc)
 ;    (testfiltercodelens)
 ;    (testfiltercodelift)
