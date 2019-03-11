@@ -1,0 +1,71 @@
+Battery:  10.8
+Ang Mom:  24.0
+Lens:     3.0
+Power:    560.0
+
+Battery:
+(= terminal_voltage (- voltage loss_voltage))
+(= loss_power (* internal_resistance (expt current 2)))
+(= loss_voltage (* internal_resistance current))
+Filtered:
+(= terminal_voltage (- voltage loss_voltage))
+(= loss_voltage (* internal_resistance current))
+
+Ang Mom:
+(= angular_momentum (* omega moment_of_inertia))
+(= omega (/ velocity radius))
+(= moment_of_inertia (* mass (expt radius 2)))
+(= kinetic_energy (* (/ mass 2) (expt velocity 2)))
+(= force (* mass acceleration))
+(= acceleration (/ (expt velocity 2) radius))
+Filtered:
+(= angular_momentum (* omega moment_of_inertia))
+(= omega (/ velocity radius))
+(= moment_of_inertia (* mass (expt radius 2)))
+
+Lens:
+(= magnification (- (/ image_distance subject_distance)))
+(= image_distance (/ 1 (- (/ 1 focal_length) (/ 1 subject_distance))))
+(= radius (* focal_length 2))
+Filtered:
+(= magnification (- (/ image_distance subject_distance)))
+(= image_distance (/ 1 (- (/ 1 focal_length) (/ 1 subject_distance))))
+
+Power:
+(= power (* force speed))
+(= speed (/ height time))
+(= work (* force height))
+(= force weight)
+(= mass (/ weight gravity))
+(= gravity 9.80665)
+Filtered:
+(= power (* force speed))
+(= speed (/ height time))
+(= force weight)
+
+public static double battery(double current, double internal_resistance, double voltage) {
+  double loss_voltage = internal_resistance * current;
+  double terminal_voltage = (voltage - loss_voltage);
+  return terminal_voltage;
+}
+
+public static double angmom(double radius, double mass, double velocity) {
+  double moment_of_inertia = mass * Math.pow(radius 2);
+  double omega = velocity / radius;
+  double angular_momentum = omega * moment_of_inertia;
+  return angular_momentum;
+}
+
+public static double lens(double subject_distance, double focal_length) {
+  double image_distance = 1 / (1 / focal_length - 1 / subject_distance);
+  double magnification = (-image_distance / subject_distance);
+  return magnification;
+}
+
+public static double lift(double weight, double height, double time) {
+  double force = weight;
+  double speed = height / time;
+  double power = force * speed;
+  return power;
+}
+

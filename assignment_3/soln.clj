@@ -9,11 +9,6 @@
   (:require [clojure.string :as str] ))
 ;            [clojure.math.numeric-tower :as math]
 
-; solve for each variable of the first equation of the equtions list
-; try to get a value for that variable
-; if if there is a value for the variable add it to the values list
-; recursively call the the function with new values set
-; remove the equation from the eqns list)
 (defn solveqns2 [eqns values v]
   (if (assocl v values)
     (assocl v values)
@@ -37,6 +32,7 @@
     (if (empty? eqns)
       nil
       (solveqns (rest eqns) (addtovalues (first eqns) values (vars (first eqns) ) ) v) ) ) )
+
 
 ; helper function for solveqnsc to determine if there are any more known variables
 (defn addtoknowns [eqn knowns vs]
@@ -62,11 +58,30 @@
         (solveqnsc codelist (rest eqns) knowns v)
         (solveqnsc (cons (vtosolvfor (first eqns) knowns (vars (first eqns) ) ) codelist) (rest eqns) (addtoknowns (first eqns) knowns (vars (first eqns) ) ) v) ) ) ) )
 
+
+; determines unecessary equations from the solveqnsc method
 (defn filtercode [codelist needed]
   (if (empty? codelist)
     '()
     (if (member (lhs (first codelist) ) needed)
       (cons (first codelist) (filtercode (rest codelist) (union (vars (rhs (first codelist) ) ) needed ) ) )
-      (filtercode (rest codelist) needed)
+      (filtercode (rest codelist) needed) ) ) )
 
 
+; concatenates given inputs for a java function into string
+(defn arglist [inputs]
+ (if (empty? inputs)
+  (str '\) )
+  (if (empty? (rest inputs) )
+    (str "double " (first inputs) (arglist (rest inputs) ) )
+    (str "double " (first inputs) ", " (arglist (rest inputs) ) ) ) ) )
+
+; a helper function for solvecode
+(defn solvecodeb [nam eqns inputs v]
+  (if (empty? eqns)
+    (cons (str "  return " v ";") (cons (str "}\n" ) ()) )
+    (cons (str "  double " (tojava (first eqns) ) ) (solvecodeb nam (rest eqns) (cons (lhs (first eqns) ) inputs) v) ) ) )
+
+; creates a java function to solve a desired equiation
+(defn solvecode [nam eqns inputs v]
+  (cons (str "public static double " nam "(" (arglist inputs) " {" ) (solvecodeb nam (trrev (filtercode (solveqnsc '() eqns inputs v)(cons v () ) ) ) inputs v) ) )

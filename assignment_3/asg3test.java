@@ -8,7 +8,6 @@ final class asg3test
 // insert your generated code here
 
 
-
     public static void main(String args[]) {
       System.out.println("battery = " + battery(0.3, 4.0, 12.0));
       System.out.println("angmom = " + angmom(4.0, 2.0, 3.0));
