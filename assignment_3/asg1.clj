@@ -196,7 +196,7 @@
             (if (= (first tree) '=)
               (str (tojavab (lhs tree) ) " " (op tree) " " (tojavab (rhs tree) ) )
               (if (= (first tree) 'expt)
-                (str "Math.pow(" (tojavab (lhs tree)) " " (tojavab (rhs tree) ) '\))
+                (str "Math.pow(" (tojavab (lhs tree)) ", " (tojavab (rhs tree) ) '\))
                 (str "Math." (op tree) "(" (tojavab (lhs tree) ) ")" ) ) ) ) ) ) )
     tree) )
 
