@@ -10,7 +10,13 @@
   '(   ( (= ?x (+ ?y ?z))    (= (- ?x ?y) ?z) )  ; subtract ?y from both sides
        ( (= ?x (+ ?y ?z))    (= (- ?x ?z) ?y) )
        ( (= ?x (- ?y ?z))    (= (- ?y ?x) ?z) )
+			 ( (= ?x (- ?y ?z))		 (= (+ ?x ?z) ?y) )
+			 ( (= ?x (* ?y ?z))    (= (/ ?x ?y) ?z) )
+			 ( (= ?x (* ?y ?z))    (= (/ ?x ?z) ?y) )
+			 ( (= ?x (/ ?y ?z))    (= (/ ?y ?x) ?z) )
+			 ( (= ?x (/ ?y ?z))    (= (* ?x ?z) ?y) )
        ( (= ?x (expt ?y 2))  (= (sqrt ?x) ?y) )
+			 ( (= ?x (sqrt ?y))    (= (expt ?x 2) ?y) )
       ; add more
 ))
 
@@ -34,13 +40,21 @@
   ( (?function conses) (?combine add1) (?baseanswer (if (empty? tree) 1 0) ) )
   ))
 
-(def solve [e v]
+
+(defn solver [algpats e v]
+	(if (empty? algpats)
+		e
+		(if (solve (transformr algpats e) v)
+			(transformr algpats e)
+			(solver (rest algpats) e v) ) ) )
+         
+(defn solve [e v]
   (if (= (lhs e) v)
     e
     (if (= (rhs e ) v)
-      (cons (op e) (cons v (lhs e) ) )
+      (cons (op e) (cons v (cons (lhs e) '() ) ) )
       (if (cons? (rhs e) )
-        (
+        (solve (solver algpats e v) v) ) ) ) )
          
 
 ; starter set for optimization patterns

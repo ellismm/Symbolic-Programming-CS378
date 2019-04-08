@@ -110,9 +110,9 @@
       (tojavab res) ) ) )
 
 ; test finding min/max of a function
-(defn testminmax []
-  (println "Cannonball:")
-  (findminmax cannonball 't))
+;(defn testminmax []
+;  (println "Cannonball:")
+;  (findminmax cannonball 't))
 
 (defn testall []
   (testformulas formulas)
@@ -120,5 +120,5 @@
   (testderiv)
   (testjava)
   (testsubstj)
-  (testminmax)
+;  (testminmax)
   )

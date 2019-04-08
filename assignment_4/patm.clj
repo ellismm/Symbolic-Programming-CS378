@@ -53,7 +53,7 @@
                     (println "Pattern: " (first pats))
                     (println "Result:  " result) )
                   result)
-                (transformrb (rest pats) input)) ) ) ) )
+                (transformrb (rest pats) input) ) ) ) ) )
 
 (defn transformlst [allpats input]) ; signature
 
@@ -62,7 +62,7 @@
 ;    println("transformr:  " input)
     (if (cons? input)
         (let [listt (transformlst allpats input)]
-    ;       println("   lst =  " listt)
+    ;      (println "   lst =  " listt)
           (transformrb allpats (transformlst allpats listt)))
         (transformrb allpats input) ) )
 
@@ -83,5 +83,5 @@
   (let [trans (transformr allpats input)]
     (if (= trans input)
         input
-;    println("    result = " trans)
+;    (println("    result = " trans)
         (transformfp allpats trans) ) ) )      ; potential loop!
