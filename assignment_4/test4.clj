@@ -120,5 +120,5 @@
   (testderiv)
   (testjava)
   (testsubstj)
-;  (testminmax)
+  (testminmax)
   )
