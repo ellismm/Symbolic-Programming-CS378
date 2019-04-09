@@ -84,6 +84,11 @@
       ( (* ?x 1) ?x)
       ( (/ 0 ?x) 0)
       ( (/ ?x ?x) 1)
+			( (/ ?x 1) ?x)
+			( (/ (* ?z ?x) (* ?y ?z)) (/ ?x ?y))
+			( (/ (* ?x ?z) (* ?y ?z)) (/ ?x ?y))
+			( (/ (* ?z ?x) (* ?z ?y)) (/ ?x ?y))
+			( (/ (* ?x ?z) (* ?z ?y)) (/ ?x ?y))
       ( (expt ?x 0) 1)
       ( (expt 0 ?x) 0)
       ( (expt 1 ?x) 1)
@@ -103,8 +108,13 @@
        ( (deriv (- ?v) ?x) (- (deriv ?v ?x)))
        ( (deriv (* ?u ?v) ?x) (+ (* ?u (deriv ?v ?x)) (* ?v (deriv ?u ?x))))
        ( (deriv (/ ?u ?v) ?x) (/ (- (* ?v (deriv ?u ?x)) (* ?u (deriv ?v ?x))) (expt ?v 2)))
-       ( (deriv (expt ?u ?c) ?x) (* (* ?c (expt ?u (- ?c 1))) (deriv ?u ?x)))
-       ( (deriv (sqrt ?u) ?x) (/ (* (/ 1 2) (deriv (?u ?x))) (sqrt ?u)))
+       ;( (deriv (expt ?u ?c) ?x) (* (* ?c (expt ?u (- ?c 1))) (deriv ?u ?x)))
+			 ;( (deriv (expt ?u ?c) ?x) (* ?c (* (expt ?u (- ?c 1)) (deriv ?u ?x))))
+			 ( (deriv (expt ?u ?c) ?x)  (* ?c (* (expt ?u (- ?c 1)) (deriv ?u ?x))))
+			 ;( (deriv (sqrt ?u) ?x) (* 0.5 (/ (deriv ?u ?x) (sqrt ?u))))
+       ;;( (deriv (sqrt ?u) ?x) (/ (* (/ 1 2) (deriv (?u ?x))) (sqrt ?u)))
+			 ;( (deriv (sqrt ?u) ?x) (/ (+ (* 2 (* (expt ?x (-2 1)) 1)) 0) (* 2 (sqrt (+ (expt ?x 2) 2)))))
+			 ( (deriv (sqrt ?u) ?x)  (/ (deriv ?u ?x) (* 2 (sqrt ?u))))
        ( (deriv (log ?u) ?x ) (/ (deriv ?u ?x) ?u))
        ( (deriv (exp ?u) ?x ) (* (exp ?u) (deriv ?u ?x)))
        ( (deriv (sin ?u) ?x) (* (cos ?u) (deriv ?u ?x)))
@@ -149,10 +159,19 @@
        ( (/ ?x ?y) ("" "(" ?x " " / " " ?y ")"))
        ( (- ?x) ("" - ?x))
        ( (incf ?x) (?x ++ ";" \return))
-       ( (incf ?x ("" ?x + +))
+       ( (incf ?x) ("" ?x + +))
        ( (decf ?x) ("" ?x - -))
        ( (equal ?x ?y) ("" "(" ?x " " = = " " ?y ")"))
-       ( (> ?x ?y ("" 
+       ( (> ?x ?y) ("" "(" ?x " " > " " ?y ")" ))
+			 ( (<= ?x ?y) ("" "(" ?x " " <= " " ?y ")" ))
+			 ( (>= ?x ?y) ("" "(" ?x " " >= " " ?y ")" ))
+			 ( (not ?x) ("" "("! " " ?x ")"))
+			 ( (and ?x ?y) ("" "(" ?x " " && " " ?y ")"))
+			 ( (or ?x ?y) ("" "(" ?x " " || " " ?y ")"))
+			 (pi Math.PI)
+			 ( (if ?test ?then ?else) ("" "if" " " "( " ?test " )" " " "{" \tab \return
+				 ?then \tab \return "}" \return "else" " " "{" \tab ?else \tab "}"))
+			 ( (return ?x) ("" "return" " " ?x ";"))
        ( (?fun ?x)   ("" ?fun "(" ?x ")"))  ; must be last
        ))
 
@@ -170,3 +189,6 @@
 (defn tojavab [code]
   (codeprint (transformfp javapats (transformfp javarestructpats code)) 0)
   (println) )
+
+(defn findminmax [e v]
+	(deriv (rhs (solve e v) ) v) )
