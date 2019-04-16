@@ -1,0 +1,34 @@
+user=> (fnfor 'test1 '(a b) '(distance (a) (b) z) nav1 navr)
+(defn test1 [a b] (euclidist a (rth2xy b)))
+user=> (test1  '(10 10) (list 30 (/ Math/PI 6)))
+16.74469341998643
+user=> (fnfor 'test2 '(c d e) '(distance (e) (f) z) nav2 navr)
+(defn test2 [c d e] (euclidist e (xysum c (rth2xy d))))
+user=> (test2 '(4 3) (list 5 (/ Math/PI 6)) '(6 8))
+3.417527165116794
+user=> (fnfor 'test3 '(g h i j) '(distance (l) (j) d) nav3 navr)
+(defn test3 [g h i j] (euclidist (xysum (xysum g (rth2xy h)) (rth2xy (rb2rth i))) j))
+user=> (test3 '(4 3) (list 5 (/ Math/PI 6)) '(5 30) '(6 8))
+5.165219445900749
+user=> (fnfor 'test4 '(m n) '(distance (m) (n) d) nav4 navr)
+(defn test4 [m n] (euclidist (ll2utm (city2ll m)) (ll2utm (city2ll n))))
+user=> (test4 'austin 'dallas)
+290726.27195112396
+user=> (fnfor 'test5 '(p q) '(distance (p) (q) d) nav5 navr)
+(defn test5 [p q] (euclidist (rth2xy (rb2rth p)) (rth2xy (rb2rth (dd2rb q)))))
+user=> (test5 '(10 60) '(12 ne))
+3.4896707137814036
+user=> (fnfor 'test6 '(r s u) '(bearing (t) (u) b) nav6 navr)
+(defn test6 [r s u] (xybearing (xysum (ll2utm (city2ll r)) (rth2xy (rb2rth (dd2rb s)))) (ll2utm (city2ll u))))
+user=> (test6 'austin '(70000 w) 'san-antonio)
+179.1213003823762
+user=> (fnfor 'test7 '(v w x y) '(range-bearing (zz) (y) b) nav7 navr)
+(defn test7 [v w x y] (list (euclidist (xysum (xysum (ll2utm (city2ll v)) (rth2xy (rb2rth w))) (rth2xy (rb2rth (dd2rb x)))) (ll2utm (city2ll y))) (xybearing (xysum (xysum (ll2utm (city2ll v)) (rth2xy (rb2rth w))) (rth2xy (rb2rth (dd2rb x)))) (ll2utm (city2ll y)))))
+user=> (test7 'austin '(80000 20) '(100000 nw) 'dallas)
+(186156.121384753 45.331381413000365)
+user=> (fnfor 'test8 '(v y) '(range-bearing (v) (y) rb) nav8 navr)
+(defn test8 [v y] (list (euclidist (ll2utm (city2ll v)) (ll2utm (city2ll y))) (xybearing (ll2utm (city2ll v)) (ll2utm (city2ll y)))))
+user=> (test8 'austin 'waco)
+(150576.87131283034 22.254882151769802)
+user=> (test8 'austin 'dallas)
+(290726.27195112396 17.834911296485686)
