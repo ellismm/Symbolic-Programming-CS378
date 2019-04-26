@@ -17,7 +17,7 @@
 ; (load "/u/cs381k/tmycin/tmycin.lsp")        ; Load the system first
 
 (defcontext 'snake
- '((color (tan brown black grey green pink red yellow orange)
+ '((color (tan brown black grey green pink red yellow orange greenish-yellow reddish-brown)
 	  ("List the colors of the snake.  If there are"
 	   "multiple colors, use the following format:"
 	   "((color 1.0) ...), for example,"
@@ -59,10 +59,12 @@
    (identity (plains-blind-snake prairie-ringneck
      western-diamondback plains-blackhead 
      texas-coral-snake mexican-milk-snake texas-rat-snake
-     hognose-snake common-kingsnake))
-   (environment (near-water in-water under-leaves grass woods)
+     hognose-snake common-kingsnake milksnake striped-whipsnake
+		 plain-bellied-water-snake rough-green-snake
+		 plains-garter-snake texas-brown-snake))
+   (environment (near-water in-water under-leaves grass woods meadows prairies)
 	  "What is the environment where the snake was seen?")
-   (behavior (aggressive playing-dead)
+   (behavior (aggressive playing-dead blend)
 	  "Enter any unusual behaviors observed,"
 	  "or UNK if none or unknown.")
    (poisonous nil)
@@ -204,6 +206,77 @@
 (rule24a (same cntxt identity common-kingsnake)
          (conclude cntxt latin-name
                 "Lampropeltis getula" tally 1000))
+
+(rule25 ($and (same cntxt color red)
+							($or (same cntxt size small)
+									 (same cntxt size medium))
+							(same cntxt pattern bands)
+							(same cntxt enironment woods)
+							(same cntxt behavior blend))
+				(conclude cntxt identity milksnake tally 900))
+
+(rule25a (same cntxt identity maksnake)
+				 (conclude cntxt latin-name
+								"Lampropeltis triangulum" tally 1000))
+
+(rule26 ($and ($or (same cntxt color black)
+									 (same cntxt color brown)
+									 (same cntxt color grey))
+							($or (same cntxt size medium)
+									 (same cntxt size large))
+							(same cntxt pattern stripes)
+							($or (same cntxt habitat woods)
+									 (same cntxt habitat grass))
+				(conclude cntxt identity striped-whitesnake tally 900)))
+
+(rule26a (same cntxt identity striped-whitesnake)
+				 (conclude cntxt latin-name
+							"Masticophis taeniatus" tally 1000))
+
+(rule27 ($and ($or (same cntxt color brown)
+									 (same cntxt color grey)
+									 (same cntxt color green))
+							($or (same cntxt size small)
+									 (same cntxt size large))
+							(same cntxt pattern blotches)
+							(same cntxt environment near-water))
+				(conclude cntxt identity plain-bellied-water-snake tally 900))
+
+(rule27a (same cntxt identity plain-bellied-water-snake)
+				 (conclude cntxt latin-name
+							"Nerodia erythrogaster" tally 1000))
+
+(rule28 ($and (same cntxt color green)
+							($or (same cntxt size small)
+									 (same cntxt size medium))
+							(same cntxt thickeness thin)
+							($or (same cntxt habitat woods)
+									 (same cntxt habitat near-water)))
+				(conclude cntxt identity rough-green-snake tally 900))
+
+(rule28a (same cntxt identity rough-green-snake)
+				 (conclude cntxt latin-name
+							"Opheodrys aestivus" tally 1000))
+
+(rule29 ($and (same cntxt color greenish-yellow)
+							(same cntxt size medium)
+							(same cantxt pattern stripes)
+							($or (same cntxt habitat meadows)
+									 (same cntxt habitat prairies)))
+				(conclude cntxt identity plain-garter-snake tally 1000))
+
+(rule29a (same cntxt identity plain-garter-snake)
+				 (conclude cntxt latin-name
+							"Thamnophis radix" tally 1000))
+(rule30 ($and (same cntxt color reddish-brown)
+							(same cntxt size small)
+							(same cntxt pattern spots)
+							(same cntxt habitat woods))
+				(conclude cntxt identity texas-brown-snake tally 1000))
+
+(rule30a (same cntxt identity texas-brwon-snake)
+				 (conclude cntxt latin-name
+							"Storeia dekayi texana" tally 1000))
 
 (rule50 ($and ($or (same cntxt color tan)
 		   (same cntxt color yellow))
