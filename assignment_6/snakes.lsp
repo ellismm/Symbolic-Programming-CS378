@@ -61,7 +61,7 @@
      texas-coral-snake mexican-milk-snake texas-rat-snake
      hognose-snake common-kingsnake milksnake striped-whipsnake
 		 plain-bellied-water-snake rough-green-snake
-		 plains-garter-snake texas-brown-snake))
+		 plains-garter-snake texas-brown-snake yellowbelly-racer))
    (environment (near-water in-water under-leaves grass woods meadows prairies)
 	  "What is the environment where the snake was seen?")
    (behavior (aggressive playing-dead blend)
@@ -277,6 +277,18 @@
 (rule30a (same cntxt identity texas-brwon-snake)
 				 (conclude cntxt latin-name
 							"Storeia dekayi texana" tally 1000))
+
+(rule31 ($and ($or (same cntxt color yellow)
+                   (same cntxt color greenish-yellow))
+              ($or (same cntxt size medium)
+                   (same cntxt size large))
+              (same cntxt thickness thin)
+              (same cntxt patterns blotches))
+        (conclude cntxt identity yellowbellied-racer tally 1000))
+
+(rule31a (same cntxt identity yellowbellied-racer)
+         (conclude cntxt latin-name
+              "Coluber constrictor flaviventris" tally 1000))
 
 (rule50 ($and ($or (same cntxt color tan)
 		   (same cntxt color yellow))
