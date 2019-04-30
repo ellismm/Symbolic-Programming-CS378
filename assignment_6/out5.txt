@@ -1,0 +1,71 @@
+
+Starts dribbling to out5.txt (2019/4/30, 16:24:33).
+NIL
+>>>>>>>>>>>(load "tmycin.lsp")
+;; Loading "tmycin.lsp"
+;; Finished loading "tmycin.lsp"
+T
+>>>>>>>>>>>(load "snakes.lsp")
+;; Loading "snakes.lsp"
+;; Finished loading "snakes.lsp"
+T
+>>>>>>>>>>>(doconsult)
+
+
+What is the COLOR of SNAKE17?
+    List the colors of the snake.  If there are
+    multiple colors, use the following format:
+    ((color 1.0) ...), for example,
+    ((RED 1.0) (YELLOW 1.0) (BLACK 1.0))
+    Expected values are: (TAN BROWN BLACK ...)
+
+black
+What is the SIZE of SNAKE17?
+    Give the approximate size of the snake.
+    tiny = 11 inches or less, small = 12-18 inches,
+    medium = 19-30 inches, large = over 30 inches.
+    Expected values are: (TINY SMALL MEDIUM ...)
+
+medium
+What is the PATTERN of SNAKE17?
+    What pattern(s) are seen on the snake?
+    stripes  = one or more stripes running lengthwise
+    bands    = multiple bands around the body
+    blotches = large contrasting blotches on the back
+    spots    = small, roughly circular spots
+    speckles = non-circular contrasting spots
+    solid    = solid color without pattern
+    If multiple patterns are observed, enter all
+    using the format ((feature 1.0) ...)
+    Expected values are: (BANDS STRIPES BLOTCHES ...)
+
+stripes
+What is the ENVIRONMENT of SNAKE17?
+    What is the environment where the snake was seen?
+    Expected values are: (NEAR-WATER IN-WATER UNDER-LEAVES ...)
+
+grass
+Is RATTLES true of SNAKE17?
+    Does the snake have rattles on its tail?
+    Expected values are: Yes/No
+
+no
+Is BITTEN true of SNAKE17?
+    Has someone been bitten by this snake?
+    Expected values are: Yes/No
+
+unk
+
+
+The conclusions for SNAKE17 are as follows:
+
+
+IDENTITY :  STRIPED-WHITESNAKE (0.90)
+
+
+LATIN-NAME :  Masticophis taeniatus (0.90)
+
+
+POISONOUS :  NO (0.72)
+SNAKE17
+>>>>>>>>>>>(dribble)

@@ -1,0 +1,88 @@
+
+Starts dribbling to out2.txt (2019/4/30, 16:9:7).
+NIL
+>>>>>(load "tmycin.lsp")
+;; Loading "tmycin.lsp"
+;; Finished loading "tmycin.lsp"
+T
+>>>>>(load "snakes.lsp")
+;; Loading "snakes.lsp"
+;; Finished loading "snakes.lsp"
+T
+>>>>>(doconsult)
+
+
+What is the COLOR of SNAKE7?
+    List the colors of the snake.  If there are
+    multiple colors, use the following format:
+    ((color 1.0) ...), for example,
+    ((RED 1.0) (YELLOW 1.0) (BLACK 1.0))
+    Expected values are: (TAN BROWN BLACK ...)
+
+brown
+What is the SIZE of SNAKE7?
+    Give the approximate size of the snake.
+    tiny = 11 inches or less, small = 12-18 inches,
+    medium = 19-30 inches, large = over 30 inches.
+    Expected values are: (TINY SMALL MEDIUM ...)
+
+medium
+What is the PATTERN of SNAKE7?
+    What pattern(s) are seen on the snake?
+    stripes  = one or more stripes running lengthwise
+    bands    = multiple bands around the body
+    blotches = large contrasting blotches on the back
+    spots    = small, roughly circular spots
+    speckles = non-circular contrasting spots
+    solid    = solid color without pattern
+    If multiple patterns are observed, enter all
+    using the format ((feature 1.0) ...)
+    Expected values are: (BANDS STRIPES BLOTCHES ...)
+
+blotches
+Is RATTLES true of SNAKE7?
+    Does the snake have rattles on its tail?
+    Expected values are: Yes/No
+
+no
+What is the FEATURES of SNAKE7?
+    Enter features observed about snake,
+    or UNK if unknown or absent
+    Expected values are: (RING-AROUND-NECK UPTURNED-NOSE BLACK-HEAD ...)
+
+upturned-nose
+What is the BEHAVIOR of SNAKE7?
+    Enter any unusual behaviors observed,
+    Expected values are: (AGGRESSIVE PLAYING-DEAD)
+
+playing-dead
+What is the ENVIRONMENT of SNAKE7?
+    What is the environment where the snake was seen?
+    Expected values are: (NEAR-WATER IN-WATER UNDER-LEAVES ...)
+
+unk
+Is TRIANGULAR-HEAD true of SNAKE7?
+    Does the snake have a triangular head,
+    noticeably larger than its neck?
+    Expected values are: Yes/No
+
+unk
+Is BITTEN true of SNAKE7?
+    Has someone been bitten by this snake?
+    Expected values are: Yes/No
+
+unk
+
+
+The conclusions for SNAKE7 are as follows:
+
+
+IDENTITY :  HOGNOSE-SNAKE (0.80)
+
+
+LATIN-NAME :  Heterodon nasicus (0.80)
+
+
+POISONOUS :  NO (0.30)
+SNAKE7
+>>>>>(dribble)

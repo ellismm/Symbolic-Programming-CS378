@@ -1,0 +1,74 @@
+
+Starts dribbling to out1.txt (2019/4/30, 14:54:59).
+NIL
+
+>(load "tmycin.lsp")
+;; Loading "tmycin.lsp"
+;; Finished loading "tmycin.lsp"
+T
+
+>(load "snakes.lsp")
+;; Loading "snakes.lsp"
+Bad CONCLUDE part of rule RULE26
+;; Finished loading "snakes.lsp"
+T
+
+>(doconsult)
+
+
+What is the COLOR of SNAKE0?
+    List the colors of the snake.  If there are
+    multiple colors, use the following format:
+    ((color 1.0) ...), for example,
+    ((RED 1.0) (YELLOW 1.0) (BLACK 1.0))
+    Expected values are: (TAN BROWN BLACK GREY GREEN PINK RED YELLOW
+                              ORANGE GREENISH-YELLOW REDDISH-BROWN)
+
+((red 1.0) (black 1.0))
+What is the SIZE of SNAKE0?
+    Give the approximate size of the snake.
+    tiny = 11 inches or less, small = 12-18 inches,
+    medium = 19-30 inches, large = over 30 inches.
+    Expected values are: (TINY SMALL MEDIUM LARGE)
+
+large
+What is the PATTERN of SNAKE0?
+    What pattern(s) are seen on the snake?
+    stripes  = one or more stripes running lengthwise
+    bands    = multiple bands around the body
+    blotches = large contrasting blotches on the back
+    spots    = small, roughly circular spots
+    speckles = non-circular contrasting spots
+    solid    = solid color without pattern
+    If multiple patterns are observed, enter all
+    using the format ((feature 1.0) ...)
+    Expected values are: (BANDS STRIPES BLOTCHES DIAMONDS SPOTS
+                                SPECKLES SOLID)
+
+unk
+What is the ENVIRONMENT of SNAKE0?
+    What is the environment where the snake was seen?
+    Expected values are: (NEAR-WATER IN-WATER UNDER-LEAVES GRASS WOODS
+                             MEADOWS PRAIRIES)
+
+in-water
+Is BITTEN true of SNAKE0?
+    Has someone been bitten by this snake?
+    Expected values are: Yes/No
+
+unk
+
+
+The conclusions for SNAKE0 are as follows:
+
+
+IDENTITY :  MUD-SNAKE (0.97)  TEXAS-INDIGO-SNAKE (0.60)
+
+
+LATIN-NAME :  Farancia abacura (0.97)  Drymarchon corais erebennus (0.60)
+
+
+POISONOUS :  NO (0.30)
+SNAKE0
+
+>(dribble)
