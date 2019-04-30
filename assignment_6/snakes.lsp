@@ -61,7 +61,8 @@
      texas-coral-snake mexican-milk-snake texas-rat-snake
      hognose-snake common-kingsnake milksnake striped-whipsnake
 		 plain-bellied-water-snake rough-green-snake
-		 plains-garter-snake texas-brown-snake yellowbelly-racer))
+		 plains-garter-snake texas-brown-snake rough-earth-snake mud-snake))
+
    (environment (near-water in-water under-leaves grass woods meadows prairies)
 	  "What is the environment where the snake was seen?")
    (behavior (aggressive playing-dead blend)
@@ -179,7 +180,7 @@
                ($or (same cntxt pattern blotches)
                     (same cntxt pattern solid))
                (same cntxt rattles yes))
-        (conclude cntxt identity texas-rat-snake tally 700) )
+        (conclude cntxt identity texas-rat-snake tally 700))
 
 (rule22a (same cntxt identity texas-rat-snake)
          (conclude cntxt latin-name "Elaphe obsoleta lindheimeri"
@@ -190,7 +191,7 @@
                    (same cntxt pattern spots))
               (same cntxt features upturned-nose)
               (same cntxt behaviour playing-dead))
-        (conclude contxt identity hognose-snake tally 800))
+        (conclude cntxt identity hognose-snake tally 800))
 
 (rule23a (same cntxt identity hognose-snake)
          (conclude cntxt latin-name
@@ -268,6 +269,7 @@
 (rule29a (same cntxt identity plain-garter-snake)
 				 (conclude cntxt latin-name
 							"Thamnophis radix" tally 1000))
+
 (rule30 ($and (same cntxt color reddish-brown)
 							(same cntxt size small)
 							(same cntxt pattern spots)
@@ -278,17 +280,27 @@
 				 (conclude cntxt latin-name
 							"Storeia dekayi texana" tally 1000))
 
-(rule31 ($and ($or (same cntxt color yellow)
-                   (same cntxt color greenish-yellow))
-              ($or (same cntxt size medium)
-                   (same cntxt size large))
-              (same cntxt thickness thin)
-              (same cntxt patterns blotches))
-        (conclude cntxt identity yellowbellied-racer tally 1000))
+(rule31 ($and ($or (same cntxt color brown)
+									 (same cntxt color gray))
+							(same cntxt size tiny)
+							(same cntxt environment woods))
+				(conclude cntxt identity rough-earth-snake tally 950))
 
-(rule31a (same cntxt identity yellowbellied-racer)
-         (conclude cntxt latin-name
-              "Coluber constrictor flaviventris" tally 1000))
+(rule31a (same cntxt identity rough-earth-snake)
+				 (conclude cntxt latin-name
+							"Haldea striatula" tally 1000))
+
+(rule32 ($and ($and (same cntxt color black)
+										(same cntxt color red))
+							($or (same cntxt size medium)
+									 (same cntxt size large))
+							($or (same cntxt environment near-water)
+									 (same cntxt environment in-water)))
+				(conclude cntxt identity mud-snake tally 975))
+
+(rule32a (same cntxt identity mud-snake)
+				 (conclude cntxt latin-name
+							"Farancia abacura" tally 1000))
 
 (rule50 ($and ($or (same cntxt color tan)
 		   (same cntxt color yellow))
