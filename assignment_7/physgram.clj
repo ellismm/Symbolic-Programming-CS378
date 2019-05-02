@@ -22,13 +22,18 @@
 (def lexicon
  '((propname (radius diameter circumference area
 	      volume height velocity time
-	      weight power height work speed mass))
+	      weight power height work speed mass
+				charge capacitance voltage density
+				spring-constant stretch length width
+				diagonal parameter force))
    (a/an     (a an))
    (the/its  (the its))
    (wi/wh    (with where))
-   (andd/comma    ('and ,))
+	 (whats	   (what's whats what calculate))
+   (andd    (and))
    (doesequal (= of is equal equals))
-   (objname  (circle sphere fall lift))
+   (objname  (circle sphere fall lift cone capacitator weight spring cylinder
+							rectangle square))
 ))  ; def lexicon
 
 (defn objprops [])   ; to keep clojure happy
@@ -36,14 +41,13 @@
 (def grammar '(
   (param     -> ((the/its)? (propname)) $2)
   (quantity  -> ((number)) $1)
-  (object    -> ((a/an)? (objname) (wi/wh) (objprops))
+  (object    -> ((a/an)? (objname) (wi/wh)? (objprops))
                    (cons 'object (cons $2 $4)))
-  ;(objprop   -> ((a/an)? (propname) of ? (quantity))  (list $2 $4))
   (objprop   -> ((a/an)? (the/its)? (propname) (doesequal)? (quantity)) (list $3 $5))
-  ;(objprop   -> ((propname) of (quantity)) (list $1 $3))
-  (objprops  -> ((objprop) (andd/comma) (objprops))  (cons $1 $3))
+  (objprops  -> ((objprop) (andd)? \, ? (objprops))  (cons $1 $4))
   (objprops  -> ((objprop))  (list $1))
-  (s         -> (what is (param) of (object)) (list 'calculate $3 $5))
+  (s         -> (what is (param) of ? (object)) (list 'calculate $3 $5))
+  (s         -> ((whats)? (param) of ? (object)) (list 'calculate $2 $4))
 ))  ; def grammar
 
 (def equations '(
@@ -75,6 +79,12 @@
   (= power       (* weight speed))
   (= power       (/ work time)) )
 
+(cylinder
+	(= diameter (* 2 radius))
+	(= circumferenc (* pi diameter))
+	(= area (* circumference length))
+	(= volume (* (* pi (expt radius 2)) length)) )
+
 (cone
   (= pi 3.141592635)
   (= diameter (* 2 radius))
@@ -84,7 +94,43 @@
   (= bottom-area (* pi (expt radius 2)))
   (= volume (* (/ pi 3) (* (expt radius 2) height)))
   (= total-area (+ side-area bottom-area)) )
+
+(capacitator
+	(= electric-field (/ voltage distance))
+	(= force (* charge electric-field))
+	(= dielectric-constant 1)
+	(= capacitance (* (* epsilon0 dielectric-constant) (/ area distance)))
+	(= charge (* capacitance voltage))
+	(= work energy)
+	(= energy (* 0.5 (* capacitane (expt voltage 2)))) )
+
+(weight
+	(= gravity 9.80665)
+	(= weight (* gravity mass))
+	(= density (/ mass volume)) )
+
+(spring
+	(= gravity 9.80665)
+	(= weight (* gravity mass))
+	(= force weight)
+	(= force (* spring-constant stretch)) )
+
+(square
+	(= length side)
+	(= diagonal  (* (sqrt 2) length))
+	(= circumference (* 4 length))
+	(= parameter (* 4 length))
+	(= area (expt length 2)) )
+
+(rectangle
+	(= width length)
+	(= width base)
+	(= diagonal (sqrt (+ (expt width 2) (expt height 2))))
+	(= circumference (+ (* width 2) (* 2 height)))
+	(= parameter (+ (* width 2) (* 2 height)))
+	(= area (* width height)) )
 ))  ; def equations
+
 
 ; find equations for topic
 (defn findeqns [topic]
