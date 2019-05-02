@@ -23,17 +23,17 @@
  '((propname (radius diameter circumference area
 	      volume height velocity time
 	      weight power height work speed mass
-				charge capacitance voltage density
-				spring-constant stretch length width
-				diagonal parameter force))
+	      charge capacitance voltage density
+              spring-constant stretch length width
+              diagonal parameter force))
    (a/an     (a an))
    (the/its  (the its))
    (wi/wh    (with where))
-	 (whats	   (what's whats what calculate))
-   (andd    (and))
+   (whats    (what's whats what calculate))
+   (andd     (and))
    (doesequal (= of is equal equals))
    (objname  (circle sphere fall lift cone capacitator weight spring cylinder
-							rectangle square))
+             rectangle square))
 ))  ; def lexicon
 
 (defn objprops [])   ; to keep clojure happy
@@ -48,6 +48,7 @@
   (objprops  -> ((objprop))  (list $1))
   (s         -> (what is (param) of ? (object)) (list 'calculate $3 $5))
   (s         -> ((whats)? (param) of ? (object)) (list 'calculate $2 $4))
+  (s         -> (does (param) of (object) = (quantity)) (list 'calculate $2 $4))
 ))  ; def grammar
 
 (def equations '(
@@ -96,39 +97,39 @@
   (= total-area (+ side-area bottom-area)) )
 
 (capacitator
-	(= electric-field (/ voltage distance))
-	(= force (* charge electric-field))
-	(= dielectric-constant 1)
-	(= capacitance (* (* epsilon0 dielectric-constant) (/ area distance)))
-	(= charge (* capacitance voltage))
-	(= work energy)
-	(= energy (* 0.5 (* capacitane (expt voltage 2)))) )
+  (= electric-field (/ voltage distance))
+  (= force (* charge electric-field))
+  (= dielectric-constant 1)
+  (= capacitance (* (* epsilon0 dielectric-constant) (/ area distance)))
+  (= charge (* capacitance voltage))
+  (= work energy)
+  (= energy (* 0.5 (* capacitane (expt voltage 2)))) )
 
 (weight
-	(= gravity 9.80665)
-	(= weight (* gravity mass))
-	(= density (/ mass volume)) )
+  (= gravity 9.80665)
+  (= weight (* gravity mass))
+  (= density (/ mass volume)) )
 
 (spring
-	(= gravity 9.80665)
-	(= weight (* gravity mass))
-	(= force weight)
-	(= force (* spring-constant stretch)) )
+  (= gravity 9.80665)
+  (= weight (* gravity mass))
+  (= force weight)
+  (= force (* spring-constant stretch)) )
 
 (square
-	(= length side)
-	(= diagonal  (* (sqrt 2) length))
-	(= circumference (* 4 length))
-	(= parameter (* 4 length))
-	(= area (expt length 2)) )
+  (= length side)
+  (= diagonal  (* (sqrt 2) length))
+  (= circumference (* 4 length))
+  (= parameter (* 4 length))
+  (= area (expt length 2)) )
 
 (rectangle
-	(= width length)
-	(= width base)
-	(= diagonal (sqrt (+ (expt width 2) (expt height 2))))
-	(= circumference (+ (* width 2) (* 2 height)))
-	(= parameter (+ (* width 2) (* 2 height)))
-	(= area (* width height)) )
+  (= width length)
+  (= width base)
+  (= diagonal (sqrt (+ (expt width 2) (expt height 2))))
+  (= circumference (+ (* width 2) (* 2 height)))
+  (= parameter (+ (* width 2) (* 2 height)))
+  (= area (* width height)) )
 ))  ; def equations
 
 
