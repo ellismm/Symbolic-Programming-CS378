@@ -13,6 +13,13 @@
 ; (phys '(what is the power of a lift with mass = 50 and
 ;         height = 10 and time = 5))
 
+; if the radius of a circle is then what is the circumference
+; given the radius of circle is _ then what is the circumference
+; does the circumference of circle with a radius of _ equal _; Yes or no it is answer
+; caclulate the circumference of a circle with a given radius of _
+; What is the relationship between _ and _
+; Obtain the circumference of a circle with a radius of _
+
 (defn s []) ; stub
 
 (defn number []
@@ -28,9 +35,11 @@
               diagonal parameter force))
    (a/an     (a an))
    (the/its  (the its))
-   (wi/wh    (with where))
-   (whats    (what's whats what calculate))
+   (wi/wh    (with where if when given))
+   (whats    (what's whats what calculate obtain show given))
    (andd     (and))
+	 (given    (if given))
+	 (right/wrong (does is))
    (doesequal (= of is equal equals))
    (objname  (circle sphere fall lift cone capacitator weight spring cylinder
              rectangle square))
@@ -43,12 +52,17 @@
   (quantity  -> ((number)) $1)
   (object    -> ((a/an)? (objname) (wi/wh)? (objprops))
                    (cons 'object (cons $2 $4)))
+	(object		 -> ((a/an)? (objname) (doesequal)? (quantity) (wi/wh)? (objprops))
+									 (cons 'object (cons $2 $6)))
+	(object    -> ((objprops) of ? (a/an)? (objname)) (cons 'object (cons $4 $1)))
   (objprop   -> ((a/an)? (the/its)? (propname) (doesequal)? (quantity)) (list $3 $5))
   (objprops  -> ((objprop) (andd)? \, ? (objprops))  (cons $1 $4))
   (objprops  -> ((objprop))  (list $1))
   (s         -> (what is (param) of ? (object)) (list 'calculate $3 $5))
   (s         -> ((whats)? (param) of ? (object)) (list 'calculate $2 $4))
-  (s         -> (does (param) of (object) = (quantity)) (list 'calculate $2 $4))
+  (s         -> ((right/wrong) (param) of (object) (doesequal)? (quantity)) (list 'calculate $2 $4))
+	(s				 -> ((right/wrong) (param) of (object)) (list 'calculate $2 $4)) 
+	(s				 -> ((given)? (object) what ? is ? (param)) (list 'calculate $5 $2))
 ))  ; def grammar
 
 (def equations '(
@@ -140,6 +154,7 @@
         (rest z)
         '())))
 
+(def thelst '(is does))
 ; parse and answer physics questions
 (defn phys [sentence]
   (def restrictions '())
@@ -147,9 +162,17 @@
   (initsent sentence)
   (let [qst (s)]
     (println qst)
-    (solveqns (findeqns (second (rhs qst)))
+		(if (and (member (first sentence) thelst) qst)
+			(if (= (solveqns (findeqns (second (rhs qst)))
+              (rest (rest (rhs qst)))
+              (second qst) ) (last sentence))
+				"YES"
+				(+ "NO it is" (solveqns (findeqns (second (rhs qst)))
               (rest (rest (rhs qst)))
               (second qst) ) ) )
+			(solveqns (findeqns (second (rhs qst)))
+              (rest (rest (rhs qst)))
+              (second qst) ) ) ) ) 
 
 ; parse and answer physics questions
 (defn physb [sentence]
