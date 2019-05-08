@@ -1,0 +1,20 @@
+Question 1: 
+(calculate volume (object cylinder (radius 2) (length 3)))
+37.699111842
+
+Question 2: 
+(calculate area (object circle (radius 5)))
+78.5398163375
+
+Quesiont 3: 
+(calculate volume (object cone (diameter 4) (height 10)))
+41.887901799999995
+
+Quesiton 4: 
+(calculate parameter (object square (length 10)))
+40
+
+Question 5: 
+(calculate area (object rectangle (width 7) (height 8)))
+56
+

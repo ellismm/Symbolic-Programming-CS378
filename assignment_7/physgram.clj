@@ -19,6 +19,7 @@
 ; caclulate the circumference of a circle with a given radius of _
 ; What is the relationship between _ and _
 ; Obtain the circumference of a circle with a radius of _
+; How many _ is _ _
 
 (defn s []) ; stub
 
@@ -26,23 +27,31 @@
   (if (number? atnword)
        atnword))
 
-(def lexicon
- '((propname (radius diameter circumference area
+(def lexicon '(
+   (propname (radius diameter circumference area
 	      volume height velocity time
 	      weight power height work speed mass
 	      charge capacitance voltage density
               spring-constant stretch length width
-              diagonal parameter force))
+              diagonal parameter force meters m meter
+              kilometers km kilometer centimeters cm
+              centimeter millimeters mm millimeter
+              nanometers nanometer nm inches in inch
+              feet foot ft))
+   (unitz    (meter m meters inches inch in feet foot ft cm mm centimeters
+              millimeters centimeter millimeter km kilometer kilometers square-feet
+              square-foot sqft square square-meters square-meter sqm mph miles-per-hour
+              mile-per-hour kmh kilometer-per-hour kilometers-per-hour m/h k/h ounces oz) )
    (a/an     (a an))
    (the/its  (the its))
    (wi/wh    (with where if when given))
-   (whats    (what's whats what calculate obtain show given))
+   (whats    (what's What's whats Whats what What calculate Calculate obtain Obtain show Show find Find))
    (andd     (and))
-	 (given    (if given))
-	 (right/wrong (does is))
+   (given    (if If given Given))
+   (right/wrong (does Does is Is))
    (doesequal (= of is equal equals))
    (objname  (circle sphere fall lift cone capacitator weight spring cylinder
-             rectangle square))
+             rectangle square units))
 ))  ; def lexicon
 
 (defn objprops [])   ; to keep clojure happy
@@ -52,17 +61,17 @@
   (quantity  -> ((number)) $1)
   (object    -> ((a/an)? (objname) (wi/wh)? (objprops))
                    (cons 'object (cons $2 $4)))
-	(object		 -> ((a/an)? (objname) (doesequal)? (quantity) (wi/wh)? (objprops))
-									 (cons 'object (cons $2 $6)))
-	(object    -> ((objprops) of ? (a/an)? (objname)) (cons 'object (cons $4 $1)))
-  (objprop   -> ((a/an)? (the/its)? (propname) (doesequal)? (quantity)) (list $3 $5))
+  (object    -> ((a/an)? (objname) (doesequal)? (quantity) (wi/wh)? (objprops))
+	      	   (cons 'object (cons $2 $6)))
+  (object    -> ((objprops) of ? (a/an)? (objname)) (cons 'object (cons $4 $1)))
+  (objprop   -> ((a/an)? (the/its)? (propname) (doesequal)? (quantity) (unitz)?) (list $3 $5))
   (objprops  -> ((objprop) (andd)? \, ? (objprops))  (cons $1 $4))
   (objprops  -> ((objprop))  (list $1))
-  (s         -> (what is (param) of ? (object)) (list 'calculate $3 $5))
-  (s         -> ((whats)? (param) of ? (object)) (list 'calculate $2 $4))
+  (s         -> ((whats)? is ? (param) of ? (object)) (list 'calculate $3 $5))
   (s         -> ((right/wrong) (param) of (object) (doesequal)? (quantity)) (list 'calculate $2 $4))
-	(s				 -> ((right/wrong) (param) of (object)) (list 'calculate $2 $4)) 
-	(s				 -> ((given)? (object) what ? is ? (param)) (list 'calculate $5 $2))
+  (s	     -> ((right/wrong) (param) of (object)) (list 'calculate $2 $4)) 
+  (s	     -> ((given)? (object) what ? is ? (param)) (list 'calculate $5 $2))
+  (s         -> (How many (param) is (quantity) (propname)) (list 'calculate $3 (cons 'object (cons 'units (cons (list $6 $5) '() ) ) ) ) )
 ))  ; def grammar
 
 (def equations '(
@@ -95,8 +104,9 @@
   (= power       (/ work time)) )
 
 (cylinder
+        (= pi 3.1415926535)
 	(= diameter (* 2 radius))
-	(= circumferenc (* pi diameter))
+	(= circumference (* pi diameter))
 	(= area (* circumference length))
 	(= volume (* (* pi (expt radius 2)) length)) )
 
@@ -144,6 +154,30 @@
   (= circumference (+ (* width 2) (* 2 height)))
   (= parameter (+ (* width 2) (* 2 height)))
   (= area (* width height)) )
+
+(units
+  (= kilometer km)
+  (= kilometers km)
+  (= meter m)
+  (= meters m)
+  (= centimeter cm)
+  (= centimeters cm)
+  (= millimeter mm)
+  (= millimeters mm)
+  (= nanometers nm)
+  (= nanometer nm)
+  (= inch in)
+  (= inches in)
+  (= foot ft)
+  (= feet ft)
+
+  (= m (* 1000 km))
+  (= cm (* 100 m))
+  (= mm (* 10 cm))
+  (= nm (* 1000000 mm))
+  (= inches (* (/ 1 2.54) cm)) )
+  (= ft (* 12 in))
+
 ))  ; def equations
 
 
@@ -162,17 +196,17 @@
   (initsent sentence)
   (let [qst (s)]
     (println qst)
-		(if (and (member (first sentence) thelst) qst)
-			(if (= (solveqns (findeqns (second (rhs qst)))
-              (rest (rest (rhs qst)))
-              (second qst) ) (last sentence))
-				"YES"
-				(+ "NO it is" (solveqns (findeqns (second (rhs qst)))
-              (rest (rest (rhs qst)))
-              (second qst) ) ) )
-			(solveqns (findeqns (second (rhs qst)))
-              (rest (rest (rhs qst)))
-              (second qst) ) ) ) ) 
+    (if (and (member (first sentence) thelst) qst)
+      (if (= (solveqns (findeqns (second (rhs qst)))
+            (rest (rest (rhs qst)))
+            (second qst) ) (last sentence))
+        (println"YES")
+        (println (str "No, the correct answer is " (solveqns (findeqns (second (rhs qst)))
+        (rest (rest (rhs qst)))
+        (second qst) ) ) ) )
+      (println (solveqns (findeqns (second (rhs qst)))
+        (rest (rest (rhs qst)))
+        (second qst) ) ) ) ) ) 
 
 ; parse and answer physics questions
 (defn physb [sentence]

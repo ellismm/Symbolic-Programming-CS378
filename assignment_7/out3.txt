@@ -1,0 +1,20 @@
+Question 1: 
+(calculate m (object units (km 1)))
+1000
+
+Question 2: 
+(calculate cm (object units (in 10)))
+25.400000000000002
+
+Quesiont 3: 
+(calculate ft (object units (in 72)))
+nil
+
+Quesiont 4: 
+(calculate in (object units (km 2)))
+nil
+
+Question 5: 
+(calculate nm (object units (cm 15)))
+150000000
+

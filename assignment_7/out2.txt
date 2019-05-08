@@ -1,0 +1,20 @@
+Question 1: 
+(calculate area (object circle (diameter 26)))
+No, the correct answer is 530.9291584415
+
+Question 2: 
+(calculate parameter (object square (length 10)))
+YES
+
+Quesiont 3: 
+(calculate circumference (object cylinder (radius 6)))
+YES
+
+Quesiont 4: 
+(calculate volume (object sphere (radius 16)))
+No, the correct answer is 17157.284678314667
+
+Question 5: 
+(calculate area (object rectangle (width 16) (height 12)))
+No, the correct answer is 192
+

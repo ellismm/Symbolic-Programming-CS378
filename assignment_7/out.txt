@@ -1,0 +1,2 @@
+(calculate power (object lift (mass 40) (height 5)))
+No, the correct answer is 
