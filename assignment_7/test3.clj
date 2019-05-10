@@ -11,11 +11,11 @@
 (println)
 
 (println "Quesiont 3: ")
-(phys '(How many ft is 72 in))
+(phys '(How many nm is 72 mm))
 (println)
 
 (println "Quesiont 4: ")
-(phys '(How many in is 2 km))
+(phys '(How many inches is 2 km))
 (println)
 
 (println "Question 5: ")

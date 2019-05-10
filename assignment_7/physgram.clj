@@ -176,7 +176,7 @@
   (= mm (* 10 cm))
   (= nm (* 1000000 mm))
   (= inches (* (/ 1 2.54) cm)) )
-  (= ft (* 12 in))
+  (= ft (* 12 inches))
 
 ))  ; def equations
 

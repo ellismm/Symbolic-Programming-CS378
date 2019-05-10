@@ -7,12 +7,12 @@ Question 2:
 25.400000000000002
 
 Quesiont 3: 
-(calculate ft (object units (in 72)))
-nil
+(calculate nm (object units (mm 72)))
+72000000
 
 Quesiont 4: 
-(calculate in (object units (km 2)))
-nil
+(calculate inches (object units (km 2)))
+78740.15748031496
 
 Question 5: 
 (calculate nm (object units (cm 15)))

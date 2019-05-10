@@ -1,0 +1,20 @@
+Question 1: 
+(calculate area (object circle (circumference 77)))
+471.81482880940916
+
+Question 2: 
+(calculate volume (object cone (height 3) (diameter 10)))
+78.539815875
+
+Quesiont 3: 
+(calculate area (object rectangle (width 20) (height 12)))
+240
+
+Quesiont 4: 
+(calculate volume (object sphere (radius 17)))
+20579.526275527332
+
+Question 5: 
+(calculate circumference (object cylinder (radius 2)))
+12.566370614
+

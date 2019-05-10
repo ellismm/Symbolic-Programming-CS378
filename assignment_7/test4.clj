@@ -2,21 +2,21 @@
 (load-files)
 (gramcom grammar)
 (println "Question 1: ")
-(phys '())
+(phys '(obtain the area of a circle if the circumference is 77 meters))
 (println)
 
 (println "Question 2: ")
-(phys '())
+(phys '(calculate the volume of a cone with a height of 3 inches and a diameter of 10 inches))
 (println)
 
 (println "Quesiont 3: ")
-(phys '())
+(phys '(show the area of rectangle with width of 20 ft and height of 12 ft))
 (println)
 
 (println "Quesiont 4: ")
-(phys '())
+(phys '(What's the volume of a sphere with a radius 17 cm))
 (println)
 
 (println "Question 5: ")
-(phys '())
+(phys '(the circumference of a cylinder where the radius is 2 km ?))
 (println)
